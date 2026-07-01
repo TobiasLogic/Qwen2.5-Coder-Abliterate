@@ -1,0 +1,12 @@
+# Minimal, known-good stack for abliteration (a static weight edit -- NOT a
+# fine-tune, so no unsloth/peft/trl). torch is installed separately in setup.sh
+# from the CUDA wheel index.
+transformers>=4.46,<5      # >=4.46 supports Qwen2.5-Coder; <5 avoids the 5.x API breaks
+accelerate>=0.34
+datasets>=2.20,<4
+huggingface_hub>=0.25,<1   # keep the classic `huggingface-cli` (1.x renamed it to `hf`)
+hf_transfer               # fast base-model download
+safetensors>=0.4
+sentencepiece
+protobuf
+numpy
