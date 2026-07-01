@@ -1,0 +1,13 @@
+# model artifacts / caches — never commit these
+out/
+*.gguf
+*.safetensors
+__pycache__/
+*.pyc
+.hf_home/
+llama.cpp/
+
+# secrets — never commit
+*.token
+.env
+hf_token*
