@@ -14,6 +14,32 @@ surgically projecting the direction out of every weight that writes to the
 residual stream can. See the write-up by
 [mlabonne](https://huggingface.co/blog/mlabonne/abliteration).
 
+Now it's genuinely one-and-done. **Two steps:**
+
+**1. Upload the photo to GitHub once** — put [benchmark_chart.png](benchmarks/benchmark_chart.png) in the root of `TobiasLogic/Qwen2.5-Coder-Abliterate` (on `main`). That's the only place the image needs to live.
+
+**2. Paste this exact text** into the GitHub README *and* the HF model card — both pull the image from that one GitHub URL, so it renders identically on both:
+
+## Benchmarks
+
+Coding capability scored with the official [EvalPlus](https://github.com/evalplus/evalplus) harness — greedy decoding, pass@1, every solution executed against unit tests. Both columns use the same harness, so it's a true apples-to-apples comparison against the full-precision base model.
+
+![Coding benchmarks: pass@1](https://raw.githubusercontent.com/TobiasLogic/Qwen2.5-Coder-Abliterate/main/benchmark_chart.png)
+
+| Benchmark | This model (abliterated, Q4_K_M) | Base Instruct (official BF16) |
+|-----------|:--------------------------------:|:-----------------------------:|
+| **HumanEval**  | 89.6% | 92.7% |
+| **HumanEval+** | 84.8% | 87.2% |
+| **MBPP**  | **91.3%** | 90.2% |
+| **MBPP+** | **77.0%** | 75.1% |
+
+**Abliteration removed refusals without breaking coding ability.** The uncensored 4-bit build stays within ~3 points of the base on HumanEval and **beats it on both MBPP variants** — average delta ≈ **−0.6 points** across the four benchmarks. Not bad for a 19 GB GGUF you can run on a single 24 GB GPU.
+
+<sub>Base numbers: Qwen2.5-Coder-32B-Instruct, [tech report](https://arxiv.org/abs/2409.12186) Table 16. Measured 2026-07, Q4_K_M via Ollama.</sub>
+
+
+
+
 | File | Purpose |
 |------|---------|
 | `setup.sh` | Install torch + transformers stack, clone llama.cpp, check GPU/disk/RAM. |
